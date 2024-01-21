@@ -1,0 +1,368 @@
+[
+    Punct {
+        ch: '#',
+        spacing: Joint,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '!',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Bracket,
+        stream: TokenStream [
+            Ident {
+                ident: "allow",
+                span: #0 bytes(0..284),
+            },
+            Group {
+                delimiter: Parenthesis,
+                stream: TokenStream [
+                    Ident {
+                        ident: "unused",
+                        span: #0 bytes(0..284),
+                    },
+                ],
+                span: #0 bytes(0..284),
+            },
+        ],
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '#',
+        spacing: Joint,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '!',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Bracket,
+        stream: TokenStream [
+            Ident {
+                ident: "feature",
+                span: #0 bytes(0..284),
+            },
+            Group {
+                delimiter: Parenthesis,
+                stream: TokenStream [
+                    Ident {
+                        ident: "custom_inner_attributes",
+                        span: #0 bytes(0..284),
+                    },
+                    Punct {
+                        ch: ',',
+                        spacing: Alone,
+                        span: #0 bytes(0..284),
+                    },
+                    Ident {
+                        ident: "proc_macro_hygiene",
+                        span: #0 bytes(0..284),
+                    },
+                    Punct {
+                        ch: ',',
+                        spacing: Alone,
+                        span: #0 bytes(0..284),
+                    },
+                    Ident {
+                        ident: "prelude_import",
+                        span: #0 bytes(0..284),
+                    },
+                ],
+                span: #0 bytes(0..284),
+            },
+        ],
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '#',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Bracket,
+        stream: TokenStream [
+            Ident {
+                ident: "prelude_import",
+                span: #0 bytes(0..284),
+            },
+        ],
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "use",
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "std",
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: ':',
+        spacing: Joint,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: ':',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "prelude",
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: ':',
+        spacing: Joint,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: ':',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "rust_2021",
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: ':',
+        spacing: Joint,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: ':',
+        spacing: Joint,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '*',
+        spacing: Joint,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: ';',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '#',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Bracket,
+        stream: TokenStream [
+            Ident {
+                ident: "macro_use",
+                span: #0 bytes(0..284),
+            },
+        ],
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "extern",
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "crate",
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "std",
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: ';',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "use",
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "default_const_functions",
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: ':',
+        spacing: Joint,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: ':',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "no_op",
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: ';',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '#',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Bracket,
+        stream: TokenStream [
+            Ident {
+                ident: "no_op",
+                span: #0 bytes(0..284),
+            },
+        ],
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "pub",
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "const",
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "fn",
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "test",
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Parenthesis,
+        stream: TokenStream [
+            Ident {
+                ident: "x",
+                span: #0 bytes(0..284),
+            },
+            Punct {
+                ch: ':',
+                spacing: Alone,
+                span: #0 bytes(0..284),
+            },
+            Ident {
+                ident: "i32",
+                span: #0 bytes(0..284),
+            },
+        ],
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '-',
+        spacing: Joint,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '>',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "i32",
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Brace,
+        stream: TokenStream [
+            Ident {
+                ident: "x",
+                span: #0 bytes(0..284),
+            },
+        ],
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "fn",
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "mut_test",
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Parenthesis,
+        stream: TokenStream [
+            Ident {
+                ident: "x",
+                span: #0 bytes(0..284),
+            },
+            Punct {
+                ch: ':',
+                spacing: Alone,
+                span: #0 bytes(0..284),
+            },
+            Ident {
+                ident: "i32",
+                span: #0 bytes(0..284),
+            },
+        ],
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '-',
+        spacing: Joint,
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '>',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "i32",
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Brace,
+        stream: TokenStream [
+            Ident {
+                ident: "x",
+                span: #0 bytes(0..284),
+            },
+        ],
+        span: #0 bytes(0..284),
+    },
+    Punct {
+        ch: '#',
+        spacing: Alone,
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Bracket,
+        stream: TokenStream [
+            Ident {
+                ident: "test",
+                span: #0 bytes(0..284),
+            },
+        ],
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "fn",
+        span: #0 bytes(0..284),
+    },
+    Ident {
+        ident: "test_test",
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Parenthesis,
+        stream: TokenStream [],
+        span: #0 bytes(0..284),
+    },
+    Group {
+        delimiter: Brace,
+        stream: TokenStream [],
+        span: #0 bytes(0..284),
+    },
+]
