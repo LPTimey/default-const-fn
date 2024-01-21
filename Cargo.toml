@@ -1,0 +1,17 @@
+[package]
+name = "default-const-functions"
+version = "0.0.1"
+authors = ["Tim Ruland"]
+edition = "2021"
+readme = "README.md"
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = {version = "2.0.48", features = ["extra-traits", "full"]}
+proc-macro2 = "1.0.76"
+quote = "1.0.35"
