@@ -1,47 +1,9 @@
 #![feature(iter_map_windows)]
-use proc_macro2::{Group, Span, TokenStream, TokenTree};
+use proc_macro2::{Group, TokenStream};
 use syn::{
     parse::{Parse, ParseStream},
     Attribute, DeriveInput, Generics, Ident, Token, Type, Visibility,
 };
-
-/*
-pub struct ItemStatic {
-    pub attrs: Vec<Attribute>,
-    pub vis: Visibility,
-    pub static_token: Token![static],
-    pub mutability: Option<Token![mut]>,
-    pub ident: Ident,
-    pub colon_token: Token![:],
-    pub ty: Box<Type>,
-    pub eq_token: Token![=],
-    pub expr: Box<Expr>,
-    pub semi_token: Token![;],
-}
-Parsing
-Keywords and punctuation can be parsed through the ParseStream::parse method. Delimiter tokens are parsed using the parenthesized!, bracketed! and braced! macros.
-
-use syn::{Attribute, Result};
-use syn::parse::{Parse, ParseStream};
-
-// Parse the ItemStatic struct shown above.
-impl Parse for ItemStatic {
-    fn parse(input: ParseStream) -> Result<Self> {
-        Ok(ItemStatic {
-            attrs: input.call(Attribute::parse_outer)?,
-            vis: input.parse()?,
-            static_token: input.parse()?,
-            mutability: input.parse()?,
-            ident: input.parse()?,
-            colon_token: input.parse()?,
-            ty: input.parse()?,
-            eq_token: input.parse()?,
-            expr: input.parse()?,
-            semi_token: input.parse()?,
-        })
-    }
-}
-*/
 
 enum TopLevel {
     Function(Function),
@@ -141,7 +103,6 @@ Group {
 |---|---|---|---|---|---|---|---|---|
 |Option<Ident>| Option<Ident>| Ident| Ident| Group| Option<Punkt>| Option<Punkt>| Option<Ident>| Group|
 */
-#[derive()]
 struct Function {
     pub attrs: Vec<Attribute>,
     pub vis: Visibility,
