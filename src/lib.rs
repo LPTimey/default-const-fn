@@ -190,5 +190,13 @@ pub fn no_op(
 #[proc_macro]
 pub fn set_lints(input: proc_macro::TokenStream)
 -> proc_macro::TokenStream{
-    input
+    quote::quote!{
+     #![warn(
+     clippy::enum_glob_use,
+     clippy::pedantic,
+     clippy::nursery,
+     clippy::unwrap_used,
+ )]
+
+    input}.into()
 }
