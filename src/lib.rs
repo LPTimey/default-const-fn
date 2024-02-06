@@ -186,3 +186,9 @@ pub fn no_op(
 ) -> proc_macro::TokenStream {
     input
 }
+
+#[proc_macro]
+pub fn set_lints(input: proc_macro::TokenStream)
+-> proc_macro::TokenStream{
+    input
+}
