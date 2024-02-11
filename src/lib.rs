@@ -1,182 +1,76 @@
-#![feature(iter_map_windows)]
-use proc_macro2::{Group, TokenStream};
-use syn::{
-    parse::{Parse, ParseStream},
-    Attribute, DeriveInput, Generics, Ident, Token, Type, Visibility,
-};
+use proc_macro2::TokenStream;
+use quote::quote;
+use syn::{parse_macro_input, token::Const, Item, ItemMod};
 
-enum TopLevel {
-    Function(Function),
-    Module(Module),
-    DeriveInput(DeriveInput),
-    Value(Value),
-    Else(TokenStream),
-}
-
-/**
-Punct {
-    ch: '#',
-    spacing: Alone,
-    span: #0 bytes(0..284),
-},
-
-Group {
-    delimiter: Bracket,
-    stream: TokenStream [
-        Ident {
-            ident: "no_op",
-            span: #0 bytes(0..284),
-        },
-    ],
-    span: #0 bytes(0..284),
-},
-
-Ident {
-    ident: "pub",
-    span: #0 bytes(0..284),
-},
-
-Ident {
-    ident: "const",
-    span: #0 bytes(0..234),
-},
-
-Ident {
-    ident: "fn",
-    span: #0 bytes(0..234),
-},
-
-Ident {
-    ident: "test",
-    span: #0 bytes(0..234),
-},
-
-Group {
-    delimiter: Parenthesis,
-    stream: TokenStream [
-        Ident {
-            ident: "x",
-            span: #0 bytes(0..234),
-        },
-        Punct {
-            ch: ':',
-            spacing: Alone,
-            span: #0 bytes(0..234),
-        },
-        Ident {
-            ident: "i32",
-            span: #0 bytes(0..234),
-        },
-    ],
-    span: #0 bytes(0..234),
-},
-
-Punct {
-    ch: '-',
-    spacing: Joint,
-    span: #0 bytes(0..234),
-},
-
-Punct {
-    ch: '>',
-    spacing: Alone,
-    span: #0 bytes(0..234),
-},
-
-Ident {
-    ident: "i32",
-    span: #0 bytes(0..234),
-},
-
-Group {
-    delimiter: Brace,
-    stream: TokenStream [
-        Ident {
-            ident: "x",
-            span: #0 bytes(0..234),
-        },
-    ],
-    span: #0 bytes(0..234),
-},
-
-|vis|constness|'fn'|name|param|'-'|'>'|Type|Body|
-|---|---|---|---|---|---|---|---|---|
-|Option<Ident>| Option<Ident>| Ident| Ident| Group| Option<Punkt>| Option<Punkt>| Option<Ident>| Group|
-*/
-struct Function {
-    pub attrs: Vec<Attribute>,
-    pub vis: Visibility,
-    pub mutability: Constness,
-    pub typ: Token![fn],
-    pub ident: Ident,
-    pub return_type: Option<(Token![-], Token![>], Type)>,
-    pub body: Group,
-}
-impl Parse for Function {
-    fn parse(input: ParseStream) -> Result<Self, syn::Error> {
-        Ok(Self {
-            attrs: input.call(Attribute::parse_outer)?,
-            vis: input.parse()?,
-            mutability: input.parse()?,
-            ident: input.parse()?,
-            typ: input.parse()?,
-            return_type: input.parse(),
-            body: input.parse()?,
-        })
-    }
-}
-impl Function {}
-enum Constness {
-    Const(Token![const]),
-    Mut(Token![mut]),
-    None,
-}
-impl Constness {
-    fn parse_mut(input: &syn::parse::ParseBuffer<'_>) -> Result<Self, syn::Error> {
-        let mut_token = input.parse::<Token![mut]>()?;
-        Ok(Self::Mut(mut_token))
-    }
-
-    fn parse_const(input: &syn::parse::ParseBuffer<'_>) -> Result<Self, syn::Error> {
-        let const_token = input.parse::<Token![const]>()?;
-        Ok(Self::Const(const_token))
-    }
-}
-impl Parse for Constness {
-    fn parse(input: ParseStream) -> syn::Result<Self> {
-        if input.peek(Token![mut]) {
-            Self::parse_mut(input)
-        } else if input.peek(Token![const]) {
-            Self::parse_const(input)
-        } else {
-            Ok(Self::None)
-        }
-    }
-}
-
-struct Module {
-    pub attrs: Vec<Attribute>,
-    pub vis: Visibility,
-    pub key: Token![mod],
-    pub ident: Ident,
-    pub generics: Generics,
-    pub body: TokenStream,
-}
-struct Value {
-    pub attrs: Vec<Attribute>,
-    pub vis: Visibility,
-    pub ident: Ident,
-    pub generics: Generics,
-    pub body: TokenStream,
-}
-/// .
 #[proc_macro_attribute]
 pub fn const_fn(
     _attr: proc_macro::TokenStream,
     input: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
-    dbg!("{:?}", &input);
-    input.into()
+    let muts: Vec<(usize, (usize, proc_macro::TokenTree))> = input
+        .clone()
+        .into_iter()
+        .enumerate()
+        .filter(|(_, tree)| match tree {
+            proc_macro::TokenTree::Ident(ident) => ident.to_string() == "mut",
+            _ => false,
+        })
+        .enumerate()
+        .collect();
+    let mut_fns: Vec<(usize, usize)> = muts
+        .iter()
+        .filter(|(i, _)| {
+            if let Some((_, (_, proc_macro::TokenTree::Ident(ident)))) = muts.get(i + 1) {
+                ident.to_string() == "fn"
+            } else {
+                false
+            }
+        })
+        .map(|(i, (j, _))| (i.to_owned(), j.to_owned()))
+        .collect();
+    let input = input
+        .into_iter()
+        .enumerate()
+        .filter_map(|(i, tree)| {
+            let (_, ignores): (Vec<usize>, Vec<usize>) = mut_fns.iter().cloned().unzip();
+
+            if !ignores.contains(&i) {
+                dbg!("fine at ", i);
+                Some(tree)
+            } else {
+                dbg!("Deleted tree ", tree, " at ", i);
+                None
+            }
+        })
+        .collect();
+    let mut curr_mod = parse_macro_input!(input as ItemMod);
+    let items: Vec<&mut Item> = curr_mod
+        .content
+        .iter_mut()
+        .flat_map(|(_, items)| items)
+        .collect();
+    //dbg! {&items};
+    items
+        .into_iter()
+        .filter_map(|item| match item {
+            Item::Fn(x) => Some(x),
+            _ => None,
+        })
+        .zip(mut_fns)
+        .enumerate()
+        .for_each(|(j, (fun, (_, i)))| match fun.sig.constness {
+            Some(_) => (),
+            None => {
+                if i == j {
+                } else {
+                    fun.sig.constness = Some(Const::default());
+                }
+            }
+        });
+    let res = quote! {
+        #curr_mod
+    };
+    res.into()
 }
 
 #[proc_macro_attribute]
@@ -188,21 +82,23 @@ pub fn no_op(
 }
 
 #[proc_macro]
-pub fn set_lints(input: proc_macro::TokenStream)
--> proc_macro::TokenStream{
+pub fn set_lints(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let lint = lints();
-    quote::quote!{
-     #lint
+    let input: TokenStream = input.into();
+    quote::quote! {
+        #lint
 
-    #input}.into()
+        #input
+    }
+    .into()
 }
 
-fn lints()->proc_macro::Tokenstream{
-    quote::quote!{
-     #![warn(
-     clippy::enum_glob_use,
-     clippy::pedantic,
-     clippy::nursery,
-     clippy::unwrap_used,
- )]}.into()
+fn lints() -> TokenStream {
+    quote::quote! {
+        #![warn(
+        clippy::enum_glob_use,
+        clippy::pedantic,
+        clippy::nursery,
+        clippy::unwrap_used,
+    )]}
 }
