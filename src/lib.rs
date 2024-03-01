@@ -2,6 +2,33 @@ use proc_macro2::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, token::Const, Item, ItemMod};
 
+enum InputFn {
+    Mut(),
+    Const(),
+    Normal(),
+}
+enum OutputFn {
+    Const(),
+    Normal(),
+}
+impl From<InputFn> for OutputFn {
+    fn from(value: InputFn) -> Self {
+        match value {
+            InputFn::Mut() => Self::Normal(),
+            InputFn::Const() => Self::Const(),
+            InputFn::Normal() => Self::Normal(),
+        }
+    }
+}
+
+#[proc_macro_attribute]
+pub fn const_fn2(
+    _attr: proc_macro::TokenStream,
+    input: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    todo!()
+}
+
 #[proc_macro_attribute]
 pub fn const_fn(
     _attr: proc_macro::TokenStream,
